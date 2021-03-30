@@ -1,4 +1,4 @@
-import client from "../../client";
+import client from '../../client';
 
 export default {
   Query: {
@@ -6,7 +6,7 @@ export default {
       try {
         const user = await client.user.findUnique({ where: { username } });
         if (!user) {
-          return { ok: false, error: "User not found!" };
+          return { ok: false, error: 'User not found!' };
         }
         return { ok: true, user };
       } catch (error) {
