@@ -9,6 +9,13 @@ export default gql`
     word: Word!
     wordId: Int!
     isMine: Boolean!
+    likesCount: Int!
+    createdAt: String!
+    updatedAt: String!
+  }
+  type Like {
+    id: Int!
+    post: Post!
     createdAt: String!
     updatedAt: String!
   }
