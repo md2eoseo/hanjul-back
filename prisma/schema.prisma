@@ -21,6 +21,8 @@ model User {
   avatar    String?
   followers User[]   @relation("FollowRelation", references: [id])
   following User[]   @relation("FollowRelation", references: [id])
+  posts     Post[]
+  likes     Like[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -32,6 +34,31 @@ model Word {
   root      String?
   variation String[]
   date      String
+  posts     Post[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  text      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  word      Word     @relation(fields: [wordId], references: [id])
+  wordId    Int
+  likes     Like[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([postId, userId])
 }
