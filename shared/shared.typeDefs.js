@@ -5,4 +5,9 @@ export default gql`
     ok: Boolean!
     error: String
   }
+
+  enum Role {
+    ADMIN
+    AUTHOR
+  }
 `;
