@@ -10,6 +10,7 @@ const PORT = process.env.PORT;
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
+  playground: true,
   context: async ({ req }) => {
     return { loggedInUser: await getLoggedInUser(req.headers.authorization) };
   },
