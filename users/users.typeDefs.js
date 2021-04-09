@@ -16,6 +16,7 @@ export default gql`
     isMe: Boolean!
     isFollowing: Boolean!
     isFollowers: Boolean!
+    role: Role
     createdAt: String!
     updatedAt: String!
   }
