@@ -10,6 +10,7 @@ export default gql`
     wordId: Int!
     isMine: Boolean!
     likesCount: Int!
+    isLiked: Boolean!
     createdAt: String!
     updatedAt: String!
   }
