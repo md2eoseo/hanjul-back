@@ -24,6 +24,6 @@ const resolverFn = async (_, { lastId }, { loggedInUser }) => {
 
 export default {
   Query: {
-    seeFeed: protectedResolver(resolverFn),
+    seeArchive: protectedResolver(resolverFn),
   },
 };
