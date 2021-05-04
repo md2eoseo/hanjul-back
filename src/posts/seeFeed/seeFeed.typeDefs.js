@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     error: String
     posts: [Post]
+    lastId: Int
   }
   type Query {
     seeFeed(lastId: Int): SeeFeedResult!

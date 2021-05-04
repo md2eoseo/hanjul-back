@@ -12,7 +12,11 @@ const resolverFn = async (_, { lastId }, { loggedInUser }) => {
       skip: lastId ? 1 : 0,
       ...(lastId && { cursor: { id: lastId } }),
     });
-    return { ok: true, posts };
+    let lastPostId = null;
+    if (posts.length) {
+      lastPostId = posts[posts.length - 1].id;
+    }
+    return { ok: true, posts, lastId: lastPostId };
   } catch (error) {
     return { ok: false, error };
   }
