@@ -12,7 +12,11 @@ export default {
           take: PAGE_SIZE,
           ...(lastId && { cursor: { id: lastId } }),
         });
-        return { ok: true, users };
+        let lastUserId = null;
+        if (users.length) {
+          lastUserId = users[users.length - 1].id;
+        }
+        return { ok: true, posts, lastId: lastUserId };
       } catch (error) {
         return { ok: false, error };
       }

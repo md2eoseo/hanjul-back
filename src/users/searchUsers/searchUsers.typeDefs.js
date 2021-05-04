@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     error: String
     users: [User]
+    lastId: Int
   }
   type Query {
     searchUsers(keyword: String!, lastId: Int): SearchUsersResult!
