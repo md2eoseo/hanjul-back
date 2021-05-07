@@ -16,7 +16,7 @@ export default {
         if (users.length) {
           lastUserId = users[users.length - 1].id;
         }
-        return { ok: true, posts, lastId: lastUserId };
+        return { ok: true, users, lastId: lastUserId };
       } catch (error) {
         return { ok: false, error };
       }
