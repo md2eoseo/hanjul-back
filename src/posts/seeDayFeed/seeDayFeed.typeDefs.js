@@ -8,6 +8,6 @@ export default gql`
     lastId: Int
   }
   type Query {
-    seeDayFeed(lastId: Int): SeeDayFeedResult!
+    seeDayFeed(date: String!, lastId: Int): SeeDayFeedResult!
   }
 `;

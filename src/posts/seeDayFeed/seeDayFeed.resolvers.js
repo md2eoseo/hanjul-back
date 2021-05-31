@@ -1,16 +1,17 @@
 import client from '../../client';
 
-const resolverFn = async (_, { lastId }) => {
+const resolverFn = async (_, { date, lastId }) => {
   try {
     const PAGE_SIZE = 20;
-    const dateTime = new Date();
-    const formatDateTime =
-      dateTime.getFullYear().toString().slice(2) +
-      (dateTime.getMonth() + 1).toString().padStart(2, '0') +
-      dateTime.getDate().toString().padStart(2, '0');
-    const word = await client.word.findFirst({ where: { date: formatDateTime } });
+    // const dateTime = new Date(Date.now() + 9 * 60 * 60 * 1000);
+    // const formatDateTime =
+    //   dateTime.getFullYear().toString().slice(2) +
+    //   (dateTime.getMonth() + 1).toString().padStart(2, '0') +
+    //   dateTime.getDate().toString().padStart(2, '0');
+    // console.log(dateTime, formatDateTime);
+    const word = await client.word.findFirst({ where: { date } });
     if (!word) {
-      return { ok: false, error: 'There is no word for today.' };
+      return { ok: false, error: '해당되는 날짜에 단어가 없습니다.' };
     }
     const wordId = word.id;
     const posts = await client.post.findMany({
