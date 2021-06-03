@@ -4,7 +4,7 @@ import { protectedResolver } from '../../users/users.utils';
 const resolverFn = async (_, { text, wordId }, { loggedInUser }) => {
   try {
     let isIncluded = false;
-    const { word, root, variation } = await client.word.findUnique({
+    const { word, variation } = await client.word.findUnique({
       where: { id: wordId },
     });
 
@@ -13,11 +13,14 @@ const resolverFn = async (_, { text, wordId }, { loggedInUser }) => {
       return { ok: false, error: 'There is no text!' };
     }
 
-    if (!root) {
-      isIncluded = trimmedText.includes(word);
-    } else {
-      isIncluded = trimmedText.includes(root);
-      // TODO: check variation if root is not enough.
+    isIncluded = trimmedText.includes(word);
+    if (!isIncluded) {
+      for (var v of variation) {
+        if (trimmedText.includes(v)) {
+          isIncluded = true;
+          break;
+        }
+      }
     }
     if (!isIncluded) {
       return { ok: false, error: 'Word not included!' };
