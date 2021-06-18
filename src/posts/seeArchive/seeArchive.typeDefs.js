@@ -8,6 +8,6 @@ export default gql`
     lastId: Int
   }
   type Query {
-    seeArchive(lastId: Int): SeeArchiveResult!
+    seeArchive(lastId: Int, pageSize: Int): SeeArchiveResult!
   }
 `;

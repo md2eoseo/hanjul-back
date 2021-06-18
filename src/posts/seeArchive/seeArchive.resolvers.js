@@ -1,14 +1,13 @@
 import client from '../../client';
 import { protectedResolver } from '../../users/users.utils';
 
-const resolverFn = async (_, { lastId }, { loggedInUser }) => {
+const resolverFn = async (_, { lastId, pageSize }, { loggedInUser }) => {
   try {
-    const PAGE_SIZE = 20;
     const posts = await client.post.findMany({
       where: { OR: [{ author: { followers: { some: { id: loggedInUser.id } } } }, { likes: { some: { userId: loggedInUser.id } } }] },
       include: { author: true },
       orderBy: { createdAt: 'desc' },
-      take: PAGE_SIZE,
+      take: pageSize || 20,
       skip: lastId ? 1 : 0,
       ...(lastId && { cursor: { id: lastId } }),
     });

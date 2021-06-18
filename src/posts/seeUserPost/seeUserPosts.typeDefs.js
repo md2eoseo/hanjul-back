@@ -8,6 +8,6 @@ export default gql`
     lastId: Int
   }
   type Query {
-    seeUserPosts(authorId: Int!, lastId: Int): SeeUserPostsResult!
+    seeUserPosts(username: String!, lastId: Int, pageSize: Int): SeeUserPostsResult!
   }
 `;

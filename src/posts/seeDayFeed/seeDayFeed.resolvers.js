@@ -1,8 +1,7 @@
 import client from '../../client';
 
-const resolverFn = async (_, { date, lastId }) => {
+const resolverFn = async (_, { date, lastId, pageSize }) => {
   try {
-    const PAGE_SIZE = 20;
     // const dateTime = new Date(Date.now() + 9 * 60 * 60 * 1000);
     // const formatDateTime =
     //   dateTime.getFullYear().toString().slice(2) +
@@ -18,7 +17,7 @@ const resolverFn = async (_, { date, lastId }) => {
       where: { wordId },
       include: { author: true },
       orderBy: { createdAt: 'desc' },
-      take: PAGE_SIZE,
+      take: pageSize || 20,
       skip: lastId ? 1 : 0,
       ...(lastId && { cursor: { id: lastId } }),
     });

@@ -1,13 +1,12 @@
 import client from '../../client';
 
-const resolverFn = async (_, { authorId, lastId }) => {
+const resolverFn = async (_, { username, lastId, pageSize }) => {
   try {
-    const PAGE_SIZE = 20;
     const posts = await client.post.findMany({
-      where: { authorId },
+      where: { author: { username } },
       include: { author: true },
       orderBy: { createdAt: 'desc' },
-      take: PAGE_SIZE,
+      take: pageSize || 20,
       skip: lastId ? 1 : 0,
       ...(lastId && { cursor: { id: lastId } }),
     });

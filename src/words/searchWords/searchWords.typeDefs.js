@@ -7,6 +7,6 @@ export default gql`
     words: [Word]
   }
   type Query {
-    searchWords(word: String, date: String, lastId: Int): SearchWords!
+    searchWords(word: String, date: String, lastId: Int, pageSize: Int): SearchWords!
   }
 `;

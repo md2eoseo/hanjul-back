@@ -7,6 +7,6 @@ export default gql`
     followers: [User]
   }
   type Query {
-    seeFollowers(username: String!, lastId: Int): SeeFollowersResult!
+    seeFollowers(username: String!, lastId: Int, pageSize: Int): SeeFollowersResult!
   }
 `;
