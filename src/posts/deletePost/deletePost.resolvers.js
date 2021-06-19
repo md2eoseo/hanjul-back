@@ -10,6 +10,7 @@ const resolverFn = async (_, { id }, { loggedInUser }) => {
     if (post.authorId !== loggedInUser.id) {
       return { ok: false, error: 'You cannot delete others post!' };
     }
+    await client.like.deleteMany({ where: { postId: id } });
     await client.post.delete({ where: { id } });
     return { ok: true };
   } catch (error) {
