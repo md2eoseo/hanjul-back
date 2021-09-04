@@ -15,7 +15,7 @@ const resolverFn = async (_, { text, wordId }, { loggedInUser }) => {
 
     isIncluded = trimmedText.includes(word);
     if (!isIncluded) {
-      for (var v of variation) {
+      for (const v of variation) {
         if (trimmedText.includes(v)) {
           isIncluded = true;
           break;

@@ -1,4 +1,5 @@
 import client from '../../client';
+import { protectedResolver } from '../../users/users.utils';
 
 const resolverFn = async (_, { id }) => {
   try {
@@ -20,6 +21,6 @@ const resolverFn = async (_, { id }) => {
 
 export default {
   Query: {
-    seePost: resolverFn,
+    seePost: protectedResolver(resolverFn),
   },
 };

@@ -8,7 +8,7 @@ const resolverFn = async (_, { username }, { loggedInUser }) => {
       return { ok: false, error: 'User not found!' };
     }
 
-    const isFollowing = Boolean(user.followers.filter(follower => follower.id === loggedInUser.id).length);
+    const isFollowing = user.followers.findIndex(follower => follower.id === loggedInUser.id) !== -1;
     if (isFollowing) {
       await client.user.update({
         where: { id: loggedInUser.id },

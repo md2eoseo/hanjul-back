@@ -10,7 +10,11 @@ export default {
           take: pageSize || 8,
           ...(lastId && { cursor: { id: lastId } }),
         });
-        return { ok: true, words };
+        let lastWordId = null;
+        if (words.length) {
+          lastWordId = words[words.length - 1].id;
+        }
+        return { ok: true, words, lastId: lastWordId };
       } catch (error) {
         return { ok: false, error };
       }

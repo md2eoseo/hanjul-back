@@ -4,11 +4,11 @@ export default {
   Query: {
     seeFollowing: async (_, { username, lastId, pageSize }) => {
       try {
-        const ok = await client.user.findUnique({
+        const user = await client.user.findUnique({
           where: { username },
           select: { id: true },
         });
-        if (!ok) {
+        if (!user) {
           return { ok: false, error: 'User not found!' };
         }
 
@@ -17,9 +17,14 @@ export default {
           take: pageSize || 8,
           ...(lastId && { cursor: { id: lastId } }),
         });
+        let lastUserId = null;
+        if (following.length) {
+          lastUserId = following[following.length - 1].id;
+        }
         return {
           ok: true,
           following,
+          lastId: lastUserId,
         };
       } catch (error) {
         return { ok: false, error };

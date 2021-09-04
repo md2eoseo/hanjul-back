@@ -1,4 +1,5 @@
 import client from '../../client';
+import { protectedResolver } from '../../users/users.utils';
 
 const resolverFn = async (_, { username, lastId, pageSize }) => {
   try {
@@ -22,6 +23,6 @@ const resolverFn = async (_, { username, lastId, pageSize }) => {
 
 export default {
   Query: {
-    seeUserPosts: resolverFn,
+    seeUserPosts: protectedResolver(resolverFn),
   },
 };

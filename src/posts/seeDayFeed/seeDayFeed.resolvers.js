@@ -1,4 +1,5 @@
 import client from '../../client';
+import { protectedResolver } from '../../users/users.utils';
 
 const resolverFn = async (_, { date, lastId, pageSize }) => {
   try {
@@ -33,6 +34,6 @@ const resolverFn = async (_, { date, lastId, pageSize }) => {
 
 export default {
   Query: {
-    seeDayFeed: resolverFn,
+    seeDayFeed: protectedResolver(resolverFn),
   },
 };
