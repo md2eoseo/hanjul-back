@@ -10,14 +10,14 @@ export default {
         if (usernameExist) {
           return {
             ok: false,
-            error: 'This username is already taken.',
+            error: '이미 사용 중인 사용자명입니다.',
           };
         }
         const emailExist = await client.user.findFirst({ where: { email } });
         if (emailExist) {
           return {
             ok: false,
-            error: 'This email is already taken.',
+            error: '이미 사용 중인 이메일입니다.',
           };
         }
 
