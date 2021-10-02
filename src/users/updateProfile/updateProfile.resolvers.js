@@ -4,6 +4,11 @@ import { uploadToS3 } from '../../shared/shared.utils';
 
 const resolverFn = async (_, { firstName, lastName, username, bio, avatar }, { loggedInUser }) => {
   try {
+    // if username changed
+    if (username !== loggedInUser.username) {
+      const isUsernameExist = await client.user.findUnique({ where: { username } });
+      if (isUsernameExist) return { ok: false, error: '이미 사용 중인 닉네임입니다.' };
+    }
     // if there is new avatar
     let avatarUrl;
     if (avatar) {
