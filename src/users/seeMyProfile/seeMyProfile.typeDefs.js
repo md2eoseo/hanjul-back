@@ -1,12 +1,12 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type SeeWordResponse {
+  type SeeMyProfileResponse {
     ok: Boolean!
     error: String
-    word: Word
+    user: User
   }
   type Query {
-    seeWord(id: Int!): SeeWordResponse!
+    seeMyProfile: SeeMyProfileResponse!
   }
 `;

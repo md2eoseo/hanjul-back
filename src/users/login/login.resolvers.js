@@ -9,13 +9,13 @@ export default {
         // find user with args.username
         const user = await client.user.findUnique({ where: { username } });
         if (!user) {
-          return { ok: false, error: 'Username not found!' };
+          return { ok: false, error: '존재하지 않는 사용자명입니다.' };
         }
 
         // check password
         const loginSuccess = await bcrypt.compare(password, user.password);
         if (!loginSuccess) {
-          return { ok: false, error: 'Wrong password!' };
+          return { ok: false, error: '비밀번호가 일치하지 않습니다.' };
         }
 
         // issue valid token

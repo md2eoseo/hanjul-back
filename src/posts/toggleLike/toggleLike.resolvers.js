@@ -7,15 +7,15 @@ const resolverFn = async (_, { postId }, { loggedInUser }) => {
     if (!post) {
       return { ok: false, error: 'Post not found!' };
     }
-    const likeExists = await client.like.findUnique({
+    const like = await client.like.findUnique({
       where: { postId_userId: { postId, userId: loggedInUser.id } },
     });
-    if (likeExists) {
-      await client.like.delete({ where: { id: likeExists.id } });
-      return { ok: true, like: false };
-    } else {
+    if (!like) {
       await client.like.create({ data: { postId, userId: loggedInUser.id } });
       return { ok: true, like: true };
+    } else {
+      await client.like.delete({ where: { id: like.id } });
+      return { ok: true, like: false };
     }
   } catch (error) {
     return {

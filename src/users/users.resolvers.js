@@ -2,6 +2,10 @@ import client from '../client';
 
 export default {
   User: {
+    totalPosts: ({ id }) =>
+      client.post.count({
+        where: { authorId: id },
+      }),
     totalFollowers: ({ id }) =>
       client.user.count({
         where: { following: { some: { id } } },

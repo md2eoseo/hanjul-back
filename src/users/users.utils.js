@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import client from '../client';
 
@@ -21,6 +22,18 @@ export function protectedResolver(ourResolver) {
   return function (root, args, context, info) {
     if (!context.loggedInUser) {
       return { ok: false, error: 'Please login to perform this action.' };
+    }
+    return ourResolver(root, args, context, info);
+  };
+}
+
+export function protectedAdminResolver(ourResolver) {
+  return function (root, args, context, info) {
+    if (!context.loggedInUser) {
+      return { ok: false, error: 'Please login to perform this action.' };
+    }
+    if (context.loggedInUser.role !== Role.ADMIN) {
+      return { ok: false, error: 'Only administrator can create words.' };
     }
     return ourResolver(root, args, context, info);
   };

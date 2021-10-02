@@ -1,12 +1,13 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type SeeFeedResult {
+  type SeeArchiveResponse {
     ok: Boolean!
     error: String
     posts: [Post]
+    lastId: Int
   }
   type Query {
-    seeFeed(lastId: Int): SeeFeedResult!
+    seeArchive(lastId: Int, pageSize: Int): SeeArchiveResponse!
   }
 `;

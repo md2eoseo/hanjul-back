@@ -2,23 +2,26 @@ import client from '../../client';
 
 export default {
   Query: {
-    seeFollowers: async (_, { username, lastId }) => {
+    seeFollowers: async (_, { username, lastId, pageSize }) => {
       try {
-        const PAGE_SIZE = 5;
-        const ok = await client.user.findUnique({
+        const user = await client.user.findUnique({
           where: { username },
-          select: { id: true },
         });
-        if (!ok) {
+        if (!user) {
           return { ok: false, error: 'User not found!' };
         }
 
         const followers = await client.user
           .findUnique({ where: { username } })
-          .followers({ skip: lastId ? 1 : 0, take: PAGE_SIZE, ...(lastId && { cursor: { id: lastId } }) });
+          .followers({ skip: lastId ? 1 : 0, take: pageSize || 8, ...(lastId && { cursor: { id: lastId } }) });
+        let lastUserId = null;
+        if (followers.length) {
+          lastUserId = followers[followers.length - 1].id;
+        }
         return {
           ok: true,
           followers,
+          lastId: lastUserId,
         };
       } catch (error) {
         return { ok: false, error };

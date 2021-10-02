@@ -6,13 +6,18 @@ export default {
     createAccount: async (_, { firstName, lastName, username, email, password, role }) => {
       try {
         // checks for username and email
-        const exist = await client.user.findFirst({
-          where: { OR: [{ username }, { email }] },
-        });
-        if (exist) {
+        const usernameExist = await client.user.findFirst({ where: { username } });
+        if (usernameExist) {
           return {
             ok: false,
-            error: 'This username/email is already taken.',
+            error: '이미 사용 중인 사용자명입니다.',
+          };
+        }
+        const emailExist = await client.user.findFirst({ where: { email } });
+        if (emailExist) {
+          return {
+            ok: false,
+            error: '이미 사용 중인 이메일입니다.',
           };
         }
 

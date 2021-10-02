@@ -2,17 +2,19 @@ import client from '../../client';
 
 export default {
   Query: {
-    searchWords: async (_, { word, date, lastId }) => {
+    searchWords: async (_, { word, date, lastId, pageSize }) => {
       try {
-        const PAGE_SIZE = 8;
         const words = await client.word.findMany({
           where: { word: { contains: word }, date },
-          select: { id: true, word: true, date: true },
           skip: lastId ? 1 : 0,
-          take: PAGE_SIZE,
+          take: pageSize || 8,
           ...(lastId && { cursor: { id: lastId } }),
         });
-        return { ok: true, words };
+        let lastWordId = null;
+        if (words.length) {
+          lastWordId = words[words.length - 1].id;
+        }
+        return { ok: true, words, lastId: lastWordId };
       } catch (error) {
         return { ok: false, error };
       }
